@@ -3,44 +3,47 @@ import java.util.Random;
 
 public class DeckOfCards {
 
-    private static final String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
-    private static final String[] ranks = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace"};
-    private static final int DECK_SIZE = suits.length * ranks.length;
+    static String[] Clubs = { "C2", "C3", "C4", "C5", "C6", "C7", "C8", "C9", "C10", "CJack", "CQueen", "CKing",
+            "CAce" };
 
-    public static void main(String[] args) {
-        String[] deck = new String[DECK_SIZE];
-        for (int i = 0; i < ranks.length; i++) {
-            for (int j = 0; j < suits.length; j++) {
-                deck[suits.length * i + j] = ranks[i] + " of " + suits[j];
-            }
-        }
+    static String[] Diamonds = { "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D10", "DJack", "DQueen", "DKing",
+            "DAce" };
 
-        shuffle(deck);
+    static String[] Hearts = { "H2", "H3", "H4", "H5", "H6", "H7", "H8", "H9", "H10", "HJack", "HQueen", "HKing",
+            "HAce" };
 
-        String[][] players = new String[4][9];
-        for (int i = 0; i < 4; i++) {
+    static String[] Spades = { "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", "SJack", "SQueen", "SKing",
+            "SAce" };
+
+    static String[][] deck = { Clubs, Diamonds, Hearts, Spades };
+    static String[][] newDeck;
+
+    public static void distribute() {
+
+        newDeck = deck;
+        for (int i = 1; i < 5; i++) {
+            System.out.println("For Player" + i);
             for (int j = 0; j < 9; j++) {
-                players[i][j] = deck[i * 9 + j];
+                selectCard();
             }
-        }
-
-        for (int i = 0; i < 4; i++) {
-            System.out.println("Player " + (i+1) + " cards:");
-            for (int j = 0; j < 9; j++) {
-                System.out.println(players[i][j]);
-            }
-            System.out.println();
         }
     }
 
-    private static void shuffle(String[] deck) {
-        Random rnd = new Random();
-        for (int i = DECK_SIZE - 1; i > 0; i--) {
-            int index = rnd.nextInt(i + 1);
-            String temp = deck[index];
-            deck[index] = deck[i];
-            deck[i] = temp;
+    public static void selectCard() {
+        Random c = new Random();
+        int suit = c.nextInt(4);
+        int rank = c.nextInt(13);
+        if (newDeck[suit][rank] == null) {
+            selectCard();
+        } else {
+            System.out.println(newDeck[suit][rank]);
+            newDeck[suit][rank] = null;
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Welcome In Deck Of Cards Program");
+        distribute();
     }
 
 }
